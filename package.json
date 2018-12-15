@@ -1,17 +1,12 @@
 {
-    "name": "coursera_node_mongo_express",
+    "name": "node-http",
     "version": "1.0.0",
-    "description": "",
+    "description": "Node HTTP Module Example",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node index"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://denyslins@bitbucket.org/denyslins/coursera_node_mongo_express.git"
-    },
     "author": "Jogesh Muppala",
-    "license": "ISC",
-    "homepage": "https://bitbucket.org/denyslins/coursera_node_mongo_express#readme"
+    "license": "ISC"
 }

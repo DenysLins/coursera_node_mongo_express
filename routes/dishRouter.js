@@ -24,4 +24,19 @@ dishRouter.route('/')
         res.end('Deleting all dishes');
     });
 
+
+dishRouter.route('/:dishId')
+    .get((req, res, next) => {
+        res.end('Will send the dish ' + req.params.dishId + ' to you!');
+    })
+    .post((req, res, next) => {
+        res.end('Will add the dish ' + req.params.dishId + ' with details: ' + req.body.description);
+    })
+    .put((req, res, next) => {
+        res.end('Will update the dish ' + req.params.dishId + ' with details: ' + req.body.description);
+    })
+    .delete((req, res, next) => {
+        res.end('Deleting the dish ' + req.params.dishId);
+    });
+
 module.exports = dishRouter;

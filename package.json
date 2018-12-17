@@ -8,5 +8,8 @@
         "start": "node index"
     },
     "author": "Jogesh Muppala",
-    "license": "ISC"
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.16.3"
+    }
 }

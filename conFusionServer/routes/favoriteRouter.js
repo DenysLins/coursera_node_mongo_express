@@ -88,24 +88,30 @@ favoriteRouter.route('/:dishId')
         res.end('PUT operation not supported on /favorites/' + req.params.dishId);
     })
     .delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
-        Favorites.find({ "user": req.user._id })
+
+        Favorites.findOne({ "user": req.user._id })
             .then((favorites) => {
-                if (favorites.length == 0) {
-                    err = new Error('Favorite Dish ' + req.params.dishId + ' not found');
-                    err.status = 404;
-                    return next(err);
-                } else if (favorites[0].dishes.filter(dishId => dishId.equals(req.params.dishId)).length != 0) {
-                    Favorites.update({
-                        "user": req.user._id
-                    }, { $pull: { dishes: { _id: req.params.dishId } } })
-                        .then((favorites) => {
-                            console.log('Favorite Removed ', favorites);
-                            res.statusCode = 200;
-                            res.setHeader('Content-Type', 'application/json');
-                            res.json(favorites);
-                        }, (err) => next(err))
-                        .catch((err) => next(err));
-                } else {
+                if (favorites != null && favorites.dishes.length != 0) {
+                    console.log(favorites);
+                    favorites.dishes = favorites.dishes.filter(dishId => !dishId.equals(req.params.dishId));
+                    if (favorites.dishes.length == 0) {
+                        Favorites.remove({ "user": req.user._id })
+                            .then((favorites) => {
+                                res.statusCode = 200;
+                                res.setHeader('Content-Type', 'application/json');
+                                res.json(favorites);
+                            }, (err) => next(err));
+
+                    } else {
+                        favorites.save()
+                            .then((favorites) => {
+                                res.statusCode = 200;
+                                res.setHeader('Content-Type', 'application/json');
+                                res.json(favorites);
+                            }, (err) => next(err));
+                    }
+                }
+                else {
                     err = new Error('Favorite Dish ' + req.params.dishId + ' not found');
                     err.status = 404;
                     return next(err);

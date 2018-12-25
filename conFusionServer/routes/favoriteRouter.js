@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const Favorites = require('../models/favorites');
+const Favorites = require('../models/favorite');
 const favoriteRouter = express.Router();
 const authenticate = require('../authenticate');
 const cors = require('./cors');
